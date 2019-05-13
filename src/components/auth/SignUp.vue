@@ -24,6 +24,7 @@
 
 <script>
 import slugify from 'slugify';
+import db from '@/firebase/init.js';
 export default {
   name: 'SighUp',
   data() {
@@ -45,7 +46,16 @@ export default {
           remove: /[$*_+~,()'"!\-:]/g,
           lower: true,
         });
-        console.log(this.slug);
+        // Check if slugified alias is already taken by another user:
+        let ref = db.collection('users').doc(this.slug);
+        ref.get().then(doc => {
+          if (doc.exists) {
+            this.feedback = 'This alias already exists. Pleasse pick new one.';
+          } else {
+            // Adds User to firestore
+            this.feedback = 'Great Choice!!!!!!!!!!!.';
+          }
+        });
       } else {
         this.feedback = 'You must enter an alias';
       }
