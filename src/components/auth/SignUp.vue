@@ -25,6 +25,7 @@
 <script>
 import slugify from 'slugify';
 import db from '@/firebase/init.js';
+import firebase from 'firebase';
 export default {
   name: 'SighUp',
   data() {
@@ -38,8 +39,8 @@ export default {
   },
   methods: {
     signUp() {
-      // check user has entered alias:
-      if (this.alias) {
+      // check user has entered alias, email, and password:
+      if (this.alias && this.email && this.password) {
         // create a slugified version of alias - use as id:
         this.slug = slugify(this.alias, {
           replacement: '-',
@@ -53,11 +54,18 @@ export default {
             this.feedback = 'This alias already exists. Pleasse pick new one.';
           } else {
             // Adds User to firestore
-            this.feedback = 'Great Choice!!!!!!!!!!!.';
+            firebase
+              .auth()
+              .createUserWithEmailAndPassword(this.email, this.password)
+              .catch(err => {
+                console.error(err);
+                this.feedback = err.message;
+              });
+            this.feedback = 'This alias is free to use';
           }
         });
       } else {
-        this.feedback = 'You must enter an alias';
+        this.feedback = 'You must enter all fields';
       }
     },
   },
