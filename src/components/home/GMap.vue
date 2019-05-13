@@ -9,15 +9,15 @@ export default {
   name: 'GMap',
   data() {
     return {
-      lat: 45,
-      lgn: -72,
+      lat: 40.8,
+      lgn: -74,
     };
   },
   methods: {
     renderMap() {
       const map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: this.lat, lng: this.lgn },
-        zoom: 7,
+        zoom: 9,
         maxZoom: 15,
         minZoom: 3,
         streetViewControl: false,
