@@ -1,6 +1,6 @@
 <template>
-  <div class="g-map">
-
+  <div class="map">
+    <h2>Map</h2>
   </div>
 </template>
 
