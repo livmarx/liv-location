@@ -1,31 +1,55 @@
 <template>
     <div class="signup container">
-    <form class="card-panel">
+    <form @submit.prevent="signUp" class="card-panel">
       <h2 class="center deep-purple-text">Sign Up</h2>
       <div class="field">
         <label for="email">Email:</label>
-        <input type="email" name="email">
+        <input type="email" name="email" v-model="email">
       </div>
       <div class="field">
         <label for="password">Password:</label>
-        <input type="password" name="password">
+        <input type="password" name="password" v-model="password">
       </div>
       <div class="field">
         <label for="alias">Alias:</label>
-        <input type="text" name="alias">
+        <input type="text" name="alias" v-model="alias">
       </div>
+      <p class="red-text center" v-if="feedback">{{ this.feedback }}</p>
       <div class="field">
-        <botton class="btn deep-purple">Sign Up</botton>
+        <button class="btn deep-purple">Sign Up</button>
       </div>
     </form>
   </div>
 </template>
 
 <script>
+import slugify from 'slugify';
 export default {
   name: 'SighUp',
   data() {
-    return {};
+    return {
+      email: null,
+      password: null,
+      alias: null,
+      feedback: null,
+      slug: null,
+    };
+  },
+  methods: {
+    signUp() {
+      // check user has entered alias:
+      if (this.alias) {
+        // create a slugified version of alias - use as id:
+        this.slug = slugify(this.alias, {
+          replacement: '-',
+          remove: /[$*_+~,()'"!\-:]/g,
+          lower: true,
+        });
+        console.log(this.slug);
+      } else {
+        this.feedback = 'You must enter an alias';
+      }
+    },
   },
 };
 </script>
