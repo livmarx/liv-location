@@ -1,0 +1,8 @@
+navigator.geolocation.getCurrentPosition(
+        position => {
+          console.log('HERE2');
+          console.log('POSTION: ', position);
+          lat = position.coords.latitude;
+          lgn = position.coords.longitude;
+          console.log('coords: ', lat, lgn)
+        })

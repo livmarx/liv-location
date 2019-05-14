@@ -53,16 +53,15 @@ export default {
                   .doc(doc.id)
                   .update({
                     geolocation: {
-                      lat: this.lat,
-                      lng: this.lgn,
-                      // lat: position.coords.latitude,
-                      // lgn: position.coords.longitude,
+                      lat: position.coords.latitude,
+                      lgn: position.coords.longitude,
                     },
                   });
               });
+            })
+            .then(() => {
+              this.renderMap();
             });
-
-          this.renderMap();
         },
         err => {
           console.error(err);
