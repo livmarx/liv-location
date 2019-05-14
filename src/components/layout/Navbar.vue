@@ -2,7 +2,7 @@
   <div class="navbar">
     <nav class="deep-purple">
       <div class="container">
-        <a href="" class="brand-logo left">GeoLiv</a>
+        <router-link :to="{name: 'GMap'}" class="brand-logo left">GeoLiv</router-link>
         <ul class="right">
           <li>
             <router-link :to="{name: 'SignUp'}">
@@ -10,12 +10,12 @@
             </router-link>
           </li>
           <li>
-            <router-link :to="{name: 'GMap'}">
+            <router-link :to="{name: 'LogIn'}">
               Log In
             </router-link>
           </li>
-          <li>
-            <a href="" @click="logout">
+          <li >
+            <a @click="logout">
               Log Out
             </a>
           </li>
@@ -38,7 +38,7 @@ export default {
         .auth()
         .signOut()
         .then(() => {
-          this.$router.push({ name: 'SignUp' });
+          this.$router.push({ name: 'LogIn' });
         });
     },
   },
