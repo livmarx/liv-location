@@ -4,17 +4,17 @@
       <div class="container">
         <router-link :to="{name: 'GMap'}" class="brand-logo left">GeoLiv</router-link>
         <ul class="right">
-          <li>
+          <li v-if="!user">
             <router-link :to="{name: 'SignUp'}">
               Sign Up
             </router-link>
           </li>
-          <li>
+          <li v-if="!user">
             <router-link :to="{name: 'LogIn'}">
               Log In
             </router-link>
           </li>
-          <li >
+          <li v-if="user">
             <a @click="logout">
               Log Out
             </a>
@@ -30,7 +30,9 @@ import firebase from 'firebase';
 export default {
   name: 'Navbar',
   data() {
-    return {};
+    return {
+      user: null,
+    };
   },
   methods: {
     logout() {
@@ -41,6 +43,15 @@ export default {
           this.$router.push({ name: 'LogIn' });
         });
     },
+  },
+  created() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.user = user;
+      } else {
+        this.user = null;
+      }
+    });
   },
 };
 </script>
